@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Navigation from './Navigation';
 import Arena from './Arena';
 import Favorites from './Favorites';
-//import Home from './Home';
+import Home from './Home';
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
@@ -14,18 +14,7 @@ function App() {
       .then((result) => result.json())
       .then((data) => setPokemon(data.results));
   }, []);
-  function Home() {
-    return (
-      <>
-        <h1>Home</h1>
-        <section>
-          {pokemon.map((pokemon) => (
-            <article>{pokemon.name}</article>
-          ))}
-        </section>
-      </>
-    );
-  }
+
   return (
     <body className="App">
       <Navigation />
