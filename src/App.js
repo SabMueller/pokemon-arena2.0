@@ -47,7 +47,7 @@ function App() {
       <section>
         <Switch>
           <Route path="/favorites">
-            <Favorites />
+            <Favorites favorites={favorites} />
           </Route>
           <Route path="/arena">
             <Arena pokemon={pokemon} />
