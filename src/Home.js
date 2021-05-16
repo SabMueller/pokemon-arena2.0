@@ -1,12 +1,30 @@
 import styled from 'styled-components/macro';
+import { useState, useEffect } from 'react';
 import pokemonLogo from './images/pokemon-logo.svg';
+import pokeball from './images/pokeball.svg';
 
 export default function Home({ pokemon }) {
+  const [favorites, setFavorites] = useState([]);
+
+  function toggleFavorites(pokemonFavorite) {
+    console.log('pokemonFavorite', pokemonFavorite);
+    const pokemonWithFavorites = pokemon.map((pokemon) => {
+      if (pokemon.name === pokemonFavorite.name) {
+        pokemon.isFavorite = !pokemon.isFavorite;
+      }
+      return pokemon;
+    });
+    console.log('pokemonWithFavorites', pokemonFavorite);
+    setFavorites(pokemonWithFavorites);
+    console.log(favorites);
+  }
+
+  function AddToFavorites() {}
   return (
     <>
-      <LogoWrapper>
+      <ImgWrapper>
         <img src={pokemonLogo} alt="Pokemon Logo" />
-      </LogoWrapper>
+      </ImgWrapper>
       <HeadlineOne>Cards</HeadlineOne>
       <PokemonWrapper>
         {pokemon.map((pokemon, index) => (
@@ -20,6 +38,10 @@ export default function Home({ pokemon }) {
               alt="Pokemon Profile"
               width="150"
             />
+            <ImgWrapper>
+              <img src={pokeball} alt="Pokeball" width="30" />
+            </ImgWrapper>
+            <button onClick={() => toggleFavorites(pokemon)}>Click me</button>
           </PokemonCard>
         ))}
       </PokemonWrapper>
@@ -27,7 +49,7 @@ export default function Home({ pokemon }) {
   );
 }
 
-const LogoWrapper = styled.div`
+const ImgWrapper = styled.div`
   display: grid;
   place-items: center;
 `;

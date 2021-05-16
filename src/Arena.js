@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { useSpring, animated, config } from 'react-spring';
+//import { useSpring, animated, config } from 'react-spring';
 import { useEffect, useState } from 'react';
 import pokemonLogo from './images/pokemon-logo.svg';
 
