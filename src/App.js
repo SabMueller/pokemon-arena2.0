@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+/* import styled from 'styled-components'; */
 import { Route, Switch } from 'react-router-dom';
 import Navigation from './Navigation';
 import Arena from './Arena';
@@ -12,26 +12,34 @@ function App() {
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
       .then((result) => result.json())
-      .then((data) => setPokemon(data.results));
+      .then((data) =>
+        setPokemon(
+          data.results.map((item, index) => {
+            item.id = index + 1;
+            item.isHidden = false;
+            return item;
+          })
+        )
+      );
   }, []);
 
   return (
-    <body className="App">
+    <main className="App">
       <Navigation />
-      <main>
+      <section>
         <Switch>
           <Route path="/favorites">
             <Favorites />
           </Route>
           <Route path="/arena">
-            <Arena />
+            <Arena pokemon={pokemon} />
           </Route>
           <Route exact path="/">
-            <Home />
+            <Home pokemon={pokemon} />
           </Route>
         </Switch>
-      </main>
-    </body>
+      </section>
+    </main>
   );
 }
 
