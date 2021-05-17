@@ -5,9 +5,11 @@ export default createGlobalStyle`
 
 :root {
     --red: #b71c1c;
+    --red-dark: #751212;
     --white: #f1e8e8;
     --yellow: #fdc33c;
-    --blue: #35b5c2;
+    --yellow-background: #c7a008;
+    --blue: #3c5aa6;
     --orange: #ff7861;
     --light-grey: #e5eff9;
     --color-line: #262864;
@@ -26,5 +28,13 @@ h1,
 h2, 
 h3 {
     margin: 0;
+}
+
+body {
+
+background-image: url('https://cdnb.artstation.com/p/assets/images/images/011/187/101/large/shen-yh-06052.jpg?1528285487');
+background-repeat: no-repeat; 
+background-attachment: fixed; 
+font-family: 'Roboto', sans-serif;
 }
 `;

@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import pokemonLogo from './images/pokemon-logo.svg';
 import pokeball from './images/pokeball.svg';
 
@@ -19,7 +19,6 @@ export default function Home({ pokemon }) {
     console.log(favorites);
   }
 
-  function AddToFavorites() {}
   return (
     <>
       <ImgWrapper>

@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-//import { useSpring, animated, config } from 'react-spring';
+import { useSpring, animated, config } from 'react-spring';
 import { useEffect, useState } from 'react';
 import pokemonLogo from './images/pokemon-logo.svg';
 
@@ -25,23 +25,24 @@ export default function Arena({ pokemon }) {
   setVisiblePokemon(togglePokemon); */
 
   /*   const [clicked, set] = useState(false);
-  const { scale } = useSpring({ scale: clicked ? 2 : 1 });
+  const { scale } = useSpring({ scale: clicked ? 2 : 1 }); */
+
+  const [visible, setVisible] = useState(false);
 
   const props = useSpring({
     to: {
       opacity: 1,
       transition: 'all 1s ease-out',
-     transform: 'scale(1.5)',
+      transform: 'scale(1.5)',
     },
     from: { opacity: 0 },
     reset: false,
     reverse: visible,
     delay: 600,
     transform: 'scale(1.5), rotate(2turn)',
-      transition: 'all 1s ease-out', 
+    transition: 'all 1s ease-out',
     config: config.gentle,
-onRest: () => setVisible(!visible),
-  }); */
+  });
 
   /*   const makeVisible = ({ children }) => {
     const props = useSpring({
@@ -76,6 +77,13 @@ onRest: () => setVisible(!visible),
                 style={{ transform: scale.interpolate((s) => `scale(${s})`) }}
 
               /> */}
+              <animated.div style={props}>
+                <img
+                  src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
+                  alt="Pokemon Profile"
+                  width="150"
+                ></img>
+              </animated.div>
             </div>
           </PokemonArea>
         ))}
@@ -98,10 +106,13 @@ const LogoWrapper = styled.div`
 `;
 
 const HeadlineOne = styled.h1`
-  font-family: 'Covered By Your Grace', cursive;
+  font-family: 'Bangers', cursive;
   display: grid;
   place-items: center;
   font-size: 4rem;
+  color: var(--red);
+  text-shadow: 1px 1px 1px black;
+  letter-spacing: 0.1rem;
 `;
 
 const PokemonWrapper = styled.section`

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Route, Switch } from 'react-router-dom';
 import Navigation from './Navigation';
 import Arena from './Arena';
-import Favorites from './Favorites';
 import pokemonLogo from './images/pokemon-logo.svg';
 import pokeball from './images/pokeball.svg';
 
@@ -26,7 +25,6 @@ function App() {
   }, []);
 
   function toggleFavorites(pokemonFavorite) {
-    //console.log('pokemonFavorite', pokemonFavorite);
     const pokemonWithFavorites = pokemon.map((pokemon) => {
       if (pokemon.name === pokemonFavorite.name) {
         pokemon.isFavorite = !pokemon.isFavorite;
@@ -47,41 +45,65 @@ function App() {
       <section>
         <Switch>
           <Route path="/favorites">
-            <Favorites favorites={favorites} />
+            <ImgWrapper>
+              <img src={pokemonLogo} alt="Pokemon Logo" />
+            </ImgWrapper>
+            <HeadlineOne>My Favorites</HeadlineOne>
+            <PokemonWrapper>
+              {favorites.map((pokemon, index) => (
+                <PokemonCard key={index}>
+                  <h3>
+                    #{pokemon.id} {` `}
+                    {pokemon.name.toUpperCase()}
+                  </h3>
+                  <img
+                    src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
+                    alt="Pokemon Profile"
+                    width="150"
+                  />
+                  <ImgWrapper>
+                    <Img
+                      onClick={() => toggleFavorites(pokemon)}
+                      src={pokeball}
+                      alt="Pokeball"
+                      width="30"
+                    />
+                  </ImgWrapper>
+                </PokemonCard>
+              ))}
+            </PokemonWrapper>
           </Route>
           <Route path="/arena">
             <Arena pokemon={pokemon} />
           </Route>
           <Route exact path="/">
-            <>
-              <ImgWrapper>
-                <img src={pokemonLogo} alt="Pokemon Logo" />
-              </ImgWrapper>
-              <HeadlineOne>Cards</HeadlineOne>
-              <PokemonWrapper>
-                {pokemon.map((pokemon, index) => (
-                  <PokemonCard key={index}>
-                    <h3>
-                      #{pokemon.id} {` `}
-                      {pokemon.name.toUpperCase()}
-                    </h3>
-                    <img
-                      src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
-                      alt="Pokemon Profile"
-                      width="150"
+            <ImgWrapper>
+              <img src={pokemonLogo} alt="Pokemon Logo" />
+            </ImgWrapper>
+            <HeadlineOne>First Generation</HeadlineOne>
+            <PokemonWrapper>
+              {pokemon.map((pokemon, index) => (
+                <PokemonCard key={index}>
+                  <h3>
+                    #{pokemon.id} {` `}
+                    {pokemon.name.toUpperCase()}
+                  </h3>
+                  <img
+                    src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
+                    alt="Pokemon Profile"
+                    width="150"
+                  />
+                  <ImgWrapper>
+                    <Img
+                      onClick={() => toggleFavorites(pokemon)}
+                      src={pokeball}
+                      alt="Pokeball"
+                      width="30"
                     />
-                    <ImgWrapper>
-                      <Img
-                        onClick={() => toggleFavorites(pokemon)}
-                        src={pokeball}
-                        alt="Pokeball"
-                        width="30"
-                      />
-                    </ImgWrapper>
-                  </PokemonCard>
-                ))}
-              </PokemonWrapper>
-            </>
+                  </ImgWrapper>
+                </PokemonCard>
+              ))}
+            </PokemonWrapper>
           </Route>
         </Switch>
       </section>
@@ -90,16 +112,21 @@ function App() {
 }
 
 export default App;
+
 const ImgWrapper = styled.div`
   display: grid;
   place-items: center;
 `;
 
 const HeadlineOne = styled.h1`
-  font-family: 'Covered By Your Grace', cursive;
+  /*   font-family: 'Covered By Your Grace', cursive; */
+  font-family: 'Bangers', cursive;
   display: grid;
   place-items: center;
   font-size: 4rem;
+  color: var(--red);
+  text-shadow: 1px 1px 1px black;
+  letter-spacing: 0.1rem;
 `;
 
 const PokemonWrapper = styled.section`
@@ -108,7 +135,7 @@ const PokemonWrapper = styled.section`
   justify-content: space-evenly;
   gap: 2rem;
 
-  background: rgb(236, 236, 236);
+  background: rgba(236, 236, 236, 0.637);
   border: 1px solid hsl(210, 15%, 89%);
   border-radius: 2rem;
   filter: drop-shadow(0 2px 0.75rem hsla(213, 53%, 20%, 0.308));
@@ -141,5 +168,11 @@ const PokemonCard = styled.article`
 `;
 
 const Img = styled.img`
-  opacity: 0.25;
+  /*   opacity: ${(props) => (props.isFavorite ? 100 : 25)}; */
+  opacity: 25%;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 100%;
+  }
 `;
