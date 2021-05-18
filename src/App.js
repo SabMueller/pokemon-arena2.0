@@ -9,6 +9,7 @@ import pokeball from './images/pokeball.svg';
 function App() {
   const [pokemon, setPokemon] = useState([]);
   const [favorites, setFavorites] = useState([]);
+
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
       .then((result) => result.json())
@@ -32,13 +33,12 @@ function App() {
       return pokemon;
     });
     setPokemon(pokemonWithFavorites);
-    const favoritePokemon = pokemon.filter(
-      (pokemon) => pokemon.isFavorite === true
-    );
+    const favoritePokemon = pokemon.filter((pokemon) => pokemon.isFavorite);
     console.log(pokemon);
     setFavorites(favoritePokemon);
   }
   console.log(favorites);
+
   return (
     <main className="App">
       <Navigation />
@@ -168,7 +168,7 @@ const PokemonCard = styled.article`
 `;
 
 const Img = styled.img`
-  /*   opacity: ${(props) => (props.isFavorite ? 100 : 25)}; */
+  /*   opacity: ${(props) => (props.isFavorite ? '100%' : '25%')}; */
   opacity: 25%;
   cursor: pointer;
 

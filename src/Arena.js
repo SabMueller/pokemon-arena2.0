@@ -33,7 +33,6 @@ export default function Arena({ pokemon }) {
     to: {
       opacity: 1,
       transition: 'all 1s ease-out',
-      transform: 'scale(1.5)',
     },
     from: { opacity: 0 },
     reset: false,
