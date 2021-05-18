@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { useSpring, animated, config } from 'react-spring';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import pokemonLogo from './images/pokemon-logo.svg';
 
 export default function Arena({ pokemon }) {
@@ -27,7 +27,7 @@ export default function Arena({ pokemon }) {
   /*   const [clicked, set] = useState(false);
   const { scale } = useSpring({ scale: clicked ? 2 : 1 }); */
 
-  const [visible, setVisible] = useState(false);
+  /*   const [visible, setVisible] = useState(false); */
 
   const props = useSpring({
     to: {
@@ -36,7 +36,6 @@ export default function Arena({ pokemon }) {
     },
     from: { opacity: 0 },
     reset: false,
-    reverse: visible,
     delay: 600,
     transform: 'scale(1.5), rotate(2turn)',
     transition: 'all 1s ease-out',
