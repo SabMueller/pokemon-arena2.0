@@ -103,6 +103,11 @@ function App() {
               <img src={pokemonLogo} alt="Pokemon Logo" />
             </ImgWrapper>
             <HeadlineOne>My Favorites</HeadlineOne>
+            <IconWrapper>
+              <img src={bugIcon} alt="Bug Type Icon" width="50" />
+              <img src={fireIcon} alt="Fire Type Icon" width="50" />
+              <img src={psychicIcon} alt="Psychic Type Icon" width="50" />
+            </IconWrapper>
             <PokemonWrapper>
               {favorites.map((pokemon, index) => (
                 <PokemonCard key={index}>
@@ -170,6 +175,11 @@ export default App;
 const ImgWrapper = styled.div`
   display: grid;
   place-items: center;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const HeadlineOne = styled.h1`
