@@ -5,6 +5,9 @@ import Navigation from './Navigation';
 import Arena from './Arena';
 import pokemonLogo from './images/pokemon-logo.svg';
 import pokeball from './images/pokeball.svg';
+import bugIcon from './images/Pokémon_Bug_Type_Icon.svg';
+import fireIcon from './images/Pokémon_Fire_Type_Icon.svg';
+import psychicIcon from './images/Pokémon_Psychic_Type_Icon.svg';
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
@@ -103,11 +106,7 @@ function App() {
               <img src={pokemonLogo} alt="Pokemon Logo" />
             </ImgWrapper>
             <HeadlineOne>My Favorites</HeadlineOne>
-            <IconWrapper>
-              <img src={bugIcon} alt="Bug Type Icon" width="50" />
-              <img src={fireIcon} alt="Fire Type Icon" width="50" />
-              <img src={psychicIcon} alt="Psychic Type Icon" width="50" />
-            </IconWrapper>
+
             <PokemonWrapper>
               {favorites.map((pokemon, index) => (
                 <PokemonCard key={index}>
@@ -140,6 +139,11 @@ function App() {
               <img src={pokemonLogo} alt="Pokemon Logo" />
             </ImgWrapper>
             <HeadlineOne>First Generation</HeadlineOne>
+            <IconWrapper>
+              <img src={bugIcon} alt="Bug Type Icon" width="50" />
+              <img src={fireIcon} alt="Fire Type Icon" width="50" />
+              <img src={psychicIcon} alt="Psychic Type Icon" width="50" />
+            </IconWrapper>
             <PokemonWrapper>
               {pokemon.map((pokemon, index) => (
                 <PokemonCard key={index}>
