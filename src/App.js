@@ -33,6 +33,8 @@ function App() {
     saveToLocal('favoritePokemon', favorites);
   }, [favorites]);
 
+  // erster useEffect: fetch Pokemon Infos bis auf Type
+
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
       .then((result) => result.json())
@@ -48,14 +50,17 @@ function App() {
       );
   }, []);
 
+  // zweiter useEffect: fetch Pokemon Type
+  // funktioniert mit dem array pokemon, weil es pokemon schon gibt >>> useEffect 1 wird zuerst ausgeführt
+
   const pokemonIndex = 59;
 
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/pokemon/' + 1)
       .then((result) => result.json())
       .then((data) => {
-        const pokemonWithType = pokemon.map((item, index) => {
-          item.id = index + 1;
+        const pokemonWithType = pokemon.map((item /*index*/) => {
+          //item.id = index + 1;
           item.type = data.types[0].type.name;
           return item;
         });
