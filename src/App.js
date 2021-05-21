@@ -8,23 +8,30 @@ import pokeball from './images/pokeball.svg';
 import bugIcon from './images/Pokémon_Bug_Type_Icon.svg';
 import fireIcon from './images/Pokémon_Fire_Type_Icon.svg';
 import psychicIcon from './images/Pokémon_Psychic_Type_Icon.svg';
+import { saveToLocal, loadFromLocal } from './lib/localStorage';
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
   // const [arcani, setArcani] = useState([]);
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(
+    loadFromLocal('favoritePokemon') ?? []
+  );
   const [pokemonTypes, setPokemonTypes] = useState([]);
   //console.log('feuer', pokemonTypes);
   // console.log('light my', arcani);
   console.log('einer is fire?', pokemonTypes);
   console.log('alle fire?', pokemon);
   //const merkel = 'kanzlerin';
-
   //pokemon[58] >>> arcani
-
   // index 58 ist arcanine
   //console.log('alle pokemon', pokemon[58]);
   //console.log('ein pokemon', pokemon[0].url);
+
+  //___________________localStorage
+
+  useEffect(() => {
+    saveToLocal('favoritePokemon', favorites);
+  }, [favorites]);
 
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
