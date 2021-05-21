@@ -8,7 +8,20 @@ import pokeball from './images/pokeball.svg';
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
+  // const [arcani, setArcani] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [pokemonTypes, setPokemonTypes] = useState([]);
+  //console.log('feuer', pokemonTypes);
+  // console.log('light my', arcani);
+  console.log('einer is fire?', pokemonTypes);
+  console.log('alle fire?', pokemon);
+  //const merkel = 'kanzlerin';
+
+  //pokemon[58] >>> arcani
+
+  // index 58 ist arcanine
+  //console.log('alle pokemon', pokemon[58]);
+  //console.log('ein pokemon', pokemon[0].url);
 
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
@@ -25,6 +38,48 @@ function App() {
       );
   }, []);
 
+  const pokemonIndex = 59;
+
+  useEffect(() => {
+    fetch('https://pokeapi.co/api/v2/pokemon/' + 1)
+      .then((result) => result.json())
+      .then((data) => {
+        const pokemonWithType = pokemon.map((item, index) => {
+          item.id = index + 1;
+          item.type = data.types[0].type.name;
+          return item;
+        });
+        setPokemonTypes(pokemonWithType);
+      });
+  }, []);
+
+  useEffect(() => {
+    const allPokemonWithTheirType = pokemon.map((pokemon) => {
+      const pokemonWithType = pokemonTypes.find(
+        (pokemonWithType) => pokemonWithType.id === pokemon.id
+      );
+      pokemon.type = pokemonWithType ? pokemonWithType.type : 'currywurst';
+      return pokemon;
+    });
+    console.log(allPokemonWithTheirType, 'all of them');
+    setPokemon(allPokemonWithTheirType);
+  }, [pokemonTypes]);
+
+  // useEffect(() => {
+  //   fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonCurry)
+  //     .then((result) => result.json())
+  //     .then((data) => data.types.map((currywurst) => {console.log('geht das?', currywurst.type.name)})
+  // }, []);
+  // pokemon.map((item, index) => )
+  // const pokemonIndex = index + 1;
+  // useEffect(() => {
+  //   fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonIndex)
+  //     .then((result) => result.json())
+  //     .then((data) => setPokemonTypes(data.types[0].type.name));
+  // }, [pokemon]);
+
+  // fire = data.types[0].type.name
+
   function toggleFavorites(pokemonFavorite) {
     const pokemonWithFavorites = pokemon.map((pokemon) => {
       if (pokemon.name === pokemonFavorite.name) {
@@ -37,7 +92,6 @@ function App() {
     console.log(pokemon);
     setFavorites(favoritePokemon);
   }
-  console.log(favorites);
 
   return (
     <main className="App">
