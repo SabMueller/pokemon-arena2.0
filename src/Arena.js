@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
-import { useSpring, animated, config } from 'react-spring';
-import { useEffect } from 'react';
+//import { useSpring, animated, config } from 'react-spring';
+import { useEffect, useState } from 'react';
 import pokemonLogo from './images/pokemon-logo.svg';
 
 export default function Arena({ pokemon }) {
@@ -10,54 +10,32 @@ export default function Arena({ pokemon }) {
     );
   }, []);
 
+  /*   <img
+  src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
+  alt="Pokemon Profile"
+  width="150"
+></img> */
+
   const pokemonCopy = pokemon.slice();
-  const shuffledPokemon = shuffleArray(pokemonCopy).slice(0, 4);
+  /*      const shuffledPokemon = shuffleArray(pokemonCopy).slice(0, 4); */
 
-  console.log(`newArray`, shuffledPokemon);
+  const [hiddenPokemons, setHiddenPokemons] = useState([]);
 
-  /*   const [visiblePokemon, setVisiblePokemon] = useState([shuffledPokemon]);
-  const togglePokemon = visiblePokemon.map((pokemon) => {
-    if (pokemon.name === visiblePokemon.name) {
-      pokemon.isHidden = !pokemon.isHidden;
-    }
-    return pokemon;
-  });
-  setVisiblePokemon(togglePokemon); */
+  useEffect(() => {
+    const shuffledPokemon = shuffleArray(pokemonCopy).slice(0, 4);
+    setHiddenPokemons(shuffledPokemon);
+  }, []);
 
-  /*   const [clicked, set] = useState(false);
-  const { scale } = useSpring({ scale: clicked ? 2 : 1 }); */
-
-  /*   const [visible, setVisible] = useState(false); */
-
-  const props = useSpring({
-    to: {
-      opacity: 1,
-      transition: 'all 1s ease-out',
-    },
-    from: { opacity: 0 },
-    reset: false,
-    delay: 600,
-    transform: 'scale(1.5), rotate(2turn)',
-    transition: 'all 1s ease-out',
-    config: config.gentle,
-  });
-
-  /*   const makeVisible = ({ children }) => {
-    const props = useSpring({
-      opacity: 1,
-      from: { opacity: 0 },
-      config: { mass: 10, tension: 10, friction: 10 },
+  function togglePokemonVisibility(pokemonToToggle) {
+    const visiblePokemon = hiddenPokemons.map((pokemon) => {
+      if (pokemon.name === pokemonToToggle.name) {
+        pokemon.isHidden = !pokemon.isHidden;
+      }
+      return pokemon;
     });
-    return (
-      <animated.div style={props}>
-        <img
-          src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
-          alt="Pokemon Profile"
-          width="150"
-        ></img>
-      </animated.div>
-    );
-  }; */
+    setHiddenPokemons(visiblePokemon);
+  }
+  console.log('HALLO HIER?!', hiddenPokemons);
 
   return (
     <>
@@ -66,22 +44,12 @@ export default function Arena({ pokemon }) {
       </LogoWrapper>
       <HeadlineOne>Arena</HeadlineOne>
       <PokemonWrapper>
-        {shuffledPokemon.map((pokemon, index) => (
+        {hiddenPokemons.map((pokemon, index) => (
           <PokemonArea key={index}>
             <h3>{pokemon.name.toUpperCase()}</h3>
             <div className="pokemon">
-              <Pokeball /* onClick={() => setVisiblePokemon(pokemon)} */ />
-              {/*               <animated.img
-                style={{ transform: scale.interpolate((s) => `scale(${s})`) }}
-
-              /> */}
-              <animated.div style={props}>
-                <img
-                  src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
-                  alt="Pokemon Profile"
-                  width="150"
-                ></img>
-              </animated.div>
+              <Pokeball onClick={() => togglePokemonVisibility(pokemon)} />
+              <ImgWrapper></ImgWrapper>
             </div>
           </PokemonArea>
         ))}
@@ -97,6 +65,11 @@ function shuffleArray(array) {
   }
   return array;
 }
+
+const ImgWrapper = styled.div`
+  display: grid;
+  place-items: center;
+`;
 
 const LogoWrapper = styled.div`
   display: grid;

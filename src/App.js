@@ -53,7 +53,7 @@ function App() {
         .then((data) => {
           const currywurst = {
             id: i,
-            type: data.types[0].type.name
+            type: data.types[0].type.name,
           };
 
           pokemonTypes.push(currywurst);
@@ -85,9 +85,10 @@ function App() {
     });
     setPokemon(pokemonWithFavorites);
     const favoritePokemon = pokemon.filter((pokemon) => pokemon.isFavorite);
-    console.log(pokemon);
     setFavorites(favoritePokemon);
   }
+
+  console.log('NEW POKEMON HIDDEN?!', pokemon);
 
   return (
     <main className="App">
@@ -125,7 +126,7 @@ function App() {
             </PokemonWrapper>
           </Route>
           <Route path="/arena">
-            <Arena pokemon={pokemon} />
+            <Arena pokemon={pokemon} onSetPokemon={setPokemon} />
           </Route>
           <Route exact path="/">
             <ImgWrapper>
