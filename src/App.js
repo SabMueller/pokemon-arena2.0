@@ -88,8 +88,6 @@ function App() {
     setFavorites(favoritePokemon);
   }
 
-  console.log('NEW POKEMON HIDDEN?!', pokemon);
-
   return (
     <main className="App">
       <Navigation />
@@ -156,6 +154,11 @@ function App() {
                       src={pokeball}
                       alt="Pokeball"
                       width="30"
+                      style={
+                        pokemon.isFavorite
+                          ? { opacity: '100%' }
+                          : { opacity: '25%', '&:hover': { opacity: '100%' } }
+                      }
                     />
                   </ImgWrapper>
                 </PokemonCard>
@@ -230,8 +233,8 @@ const PokemonCard = styled.article`
 `;
 
 const Img = styled.img`
-  /*   opacity: ${(props) => (props.isFavorite ? '100%' : '25%')}; */
-  opacity: 25%;
+  /*   opacity: ${(pokemon) => (pokemon.isFavorite ? '100%' : '25%')}; */
+  /*   opacity: 25%; */
   cursor: pointer;
 
   &:hover {
