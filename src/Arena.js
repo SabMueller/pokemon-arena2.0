@@ -10,12 +10,6 @@ export default function Arena({ pokemon }) {
     );
   }, []);
 
-  /*   <img
-  src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
-  alt="Pokemon Profile"
-  width="150"
-></img> */
-
   const pokemonCopy = pokemon.slice();
   /*      const shuffledPokemon = shuffleArray(pokemonCopy).slice(0, 4); */
 
@@ -28,14 +22,26 @@ export default function Arena({ pokemon }) {
 
   function togglePokemonVisibility(pokemonToToggle) {
     const visiblePokemon = hiddenPokemons.map((pokemon) => {
-      if (pokemon.name === pokemonToToggle.name) {
-        pokemon.isHidden = !pokemon.isHidden;
+      if (pokemon.id === pokemonToToggle.id) {
+        pokemon.isSelected = !pokemon.isSelected;
       }
       return pokemon;
     });
     setHiddenPokemons(visiblePokemon);
   }
-  console.log('HALLO HIER?!', hiddenPokemons);
+
+  function revealPokemon(pokemon) {
+    return (
+      <>
+        <h3>{pokemon.name.toUpperCase()}</h3>
+        <img
+          src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
+          alt="Pokemon Profile"
+          width="150"
+        ></img>
+      </>
+    );
+  }
 
   return (
     <>
@@ -46,10 +52,11 @@ export default function Arena({ pokemon }) {
       <PokemonWrapper>
         {hiddenPokemons.map((pokemon, index) => (
           <PokemonArea key={index}>
-            <h3>{pokemon.name.toUpperCase()}</h3>
             <div className="pokemon">
               <Pokeball onClick={() => togglePokemonVisibility(pokemon)} />
-              <ImgWrapper></ImgWrapper>
+              <ImgWrapper>
+                {pokemon.isSelected ? revealPokemon(pokemon) : null}
+              </ImgWrapper>
             </div>
           </PokemonArea>
         ))}

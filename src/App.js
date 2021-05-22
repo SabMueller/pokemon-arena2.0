@@ -16,10 +16,10 @@ function App() {
     loadFromLocal('favoritePokemon') ?? []
   );
   const [pokemonTypes, setPokemonTypes] = useState([]);
-  console.log('1 type:', pokemonTypes[0]);
+  /*   console.log('1 type:', pokemonTypes[0]);
   console.log('1 pokemon:', pokemon[0]);
   console.log('all types:', pokemonTypes);
-  console.log('all pokemon:', pokemon);
+  console.log('all pokemon:', pokemon); */
 
   //___________________localStorage
 
@@ -37,7 +37,7 @@ function App() {
           data.results.map((item, index) => {
             item.id = index + 1;
             item.isFavorite = false;
-            item.isHidden = false;
+            item.isSelected = false;
             return item;
           })
         )
