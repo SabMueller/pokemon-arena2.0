@@ -11,7 +11,7 @@ import psychicIcon from './images/Pokémon_Psychic_Type_Icon.svg';
 import { saveToLocal, loadFromLocal } from './lib/localStorage';
 
 function App() {
-  const [pokemon, setPokemon] = useState([]);
+  const [pokemon, setPokemon] = useState(loadFromLocal('Pokemon') ?? []);
   const [favorites, setFavorites] = useState(
     loadFromLocal('favoritePokemon') ?? []
   );
@@ -26,6 +26,10 @@ function App() {
   useEffect(() => {
     saveToLocal('favoritePokemon', favorites);
   }, [favorites]);
+
+  useEffect(() => {
+    saveToLocal('Pokemon', pokemon);
+  }, [pokemon]);
 
   // erster useEffect: fetch Pokemon Infos bis auf Type
 
