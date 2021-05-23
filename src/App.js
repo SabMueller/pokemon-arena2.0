@@ -233,11 +233,10 @@ const PokemonCard = styled.article`
 `;
 
 const Img = styled.img`
-  /*   opacity: ${(pokemon) => (pokemon.isFavorite ? '100%' : '25%')}; */
-  /*   opacity: 25%; */
+  /*   opacity: ${(props) => (props.isFavorite ? '100%' : '25%')}; */
   cursor: pointer;
 
   &:hover {
-    opacity: 100%;
+    opacity: 100% !important;
   }
 `;
