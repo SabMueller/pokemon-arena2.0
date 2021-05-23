@@ -160,8 +160,12 @@ function App() {
                       width="30"
                       style={
                         pokemon.isFavorite
-                          ? { opacity: '100%' }
-                          : { opacity: '25%', '&:hover': { opacity: '100%' } }
+                          ? {
+                              opacity: '100%',
+                              transition: '0.8s ease-in',
+                              transform: 'scale(1.5)',
+                            }
+                          : { opacity: '25%', transition: '0.5s ease-out' }
                       }
                     />
                   </ImgWrapper>
