@@ -84,7 +84,7 @@ function App() {
     });
     console.log(allPokemonWithTheirType, 'all of them');
     setPokemon(allPokemonWithTheirType);
-  }, []);
+  }, [pokemonTypes]);
 
   function toggleFavorites(pokemonFavorite) {
     const pokemonWithFavorites = pokemon.map((pokemon) => {
