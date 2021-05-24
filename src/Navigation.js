@@ -51,7 +51,7 @@ const NavigationStyle = styled.nav`
     top: 0;
     left: 0;
     width: 50%;
-    height: 100%;
+    xheight: 100%;
   }
   &:after {
     content: '';
@@ -59,7 +59,7 @@ const NavigationStyle = styled.nav`
     top: 0;
     left: -100%;
     width: 100%;
-    height: 100%;
+    xheight: 100%;
     background: linear-gradient(
       90deg,
       transparent,
