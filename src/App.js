@@ -121,6 +121,15 @@ function App() {
                       src={pokeball}
                       alt="Pokeball"
                       width="30"
+                      style={
+                        pokemon.isFavorite
+                          ? {
+                              opacity: '100%',
+                              transition: 'all 0.4s ease-in',
+                              transform: 'scale(1.5)',
+                            }
+                          : { opacity: '25%', transition: 'all 0.5s ease-out' }
+                      }
                     />
                   </ImgWrapper>
                 </PokemonCard>
@@ -162,10 +171,10 @@ function App() {
                         pokemon.isFavorite
                           ? {
                               opacity: '100%',
-                              transition: '0.8s ease-in',
+                              transition: 'all 0.4s ease-in',
                               transform: 'scale(1.5)',
                             }
-                          : { opacity: '25%', transition: '0.5s ease-out' }
+                          : { opacity: '25%', transition: 'all 0.5s ease-out' }
                       }
                     />
                   </ImgWrapper>
@@ -232,7 +241,7 @@ const PokemonCard = styled.article`
     #b5aee4 100%
   );
   min-width: 20vw;
-  border-radius: 15%;
+  border-radius: 10%;
   padding: 1rem;
   color: white;
   text-shadow: 1px 1px 0 black;

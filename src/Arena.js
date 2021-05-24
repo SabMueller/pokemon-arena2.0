@@ -1,7 +1,7 @@
-import styled from 'styled-components/macro';
-//import { useSpring, animated, config } from 'react-spring';
+import styled, { keyframes } from 'styled-components/macro';
 import { useEffect, useState } from 'react';
 import pokemonLogo from './images/pokemon-logo.svg';
+import cloud from './images/cloud.svg';
 
 export default function Arena({ pokemon }) {
   useEffect(() => {
@@ -11,34 +11,34 @@ export default function Arena({ pokemon }) {
   }, []);
 
   const pokemonCopy = pokemon.slice();
-  /*      const shuffledPokemon = shuffleArray(pokemonCopy).slice(0, 4); */
 
-  const [hiddenPokemons, setHiddenPokemons] = useState([]);
+  const [hiddenPokemon, setHiddenPokemon] = useState([]);
 
   useEffect(() => {
     const shuffledPokemon = shuffleArray(pokemonCopy).slice(0, 4);
-    setHiddenPokemons(shuffledPokemon);
+    setHiddenPokemon(shuffledPokemon);
   }, []);
 
   function togglePokemonVisibility(pokemonToToggle) {
-    const visiblePokemon = hiddenPokemons.map((pokemon) => {
+    const visiblePokemon = hiddenPokemon.map((pokemon) => {
       if (pokemon.id === pokemonToToggle.id) {
         pokemon.isSelected = !pokemon.isSelected;
       }
       return pokemon;
     });
-    setHiddenPokemons(visiblePokemon);
+    setHiddenPokemon(visiblePokemon);
   }
 
   function revealPokemon(pokemon) {
     return (
       <>
         <h3>{pokemon.name.toUpperCase()}</h3>
-        <img
+        <Cloud src={cloud} />
+        <PokemonImage
           src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
           alt="Pokemon Profile"
-          width="150"
-        ></img>
+          className="pokemon-profile-pic"
+        ></PokemonImage>
       </>
     );
   }
@@ -50,7 +50,7 @@ export default function Arena({ pokemon }) {
       </LogoWrapper>
       <HeadlineOne>Arena</HeadlineOne>
       <PokemonWrapper>
-        {hiddenPokemons.map((pokemon, index) => (
+        {hiddenPokemon.map((pokemon, index) => (
           <PokemonArea key={index}>
             <div className="pokemon">
               <Pokeball onClick={() => togglePokemonVisibility(pokemon)} />
@@ -73,9 +73,97 @@ function shuffleArray(array) {
   return array;
 }
 
+const tinUpIn = keyframes`
+0% {
+    opacity: 0;
+    transform: scale(1, 1) translateY(-900%);
+  }
+
+  50%,
+  70%,
+  90% {
+    opacity: 0;
+    transform: scale(1.1, 1.1) translateY(0);
+  }
+
+  60%,
+  80%,
+  100% {
+    opacity: 1;
+    transform: scale(2) translateY(0);
+  }
+`;
+
+const TwisterIn = keyframes`
+  0% {
+    opacity: 0;
+    transform-origin: 100% 0;
+    transform: scale(0, 0) rotate(360deg) translateY(100%);
+  }
+
+  30% {
+    transform-origin: 100% 0;
+    transform: scale(0, 0) rotate(360deg) translateY(100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform-origin: 0 0;
+    transform: scale(1.5) rotate(0deg) translateY(0);
+  }
+`;
+
 const ImgWrapper = styled.div`
   display: grid;
   place-items: center;
+  position: relative;
+
+  h3 {
+    animation: ${tinUpIn} 3.6s ease-in;
+    color: var(--red);
+    text-shadow: 1px 1px 2px black;
+    font-family: 'Bangers', cursive;
+    font-size: 2.5rem;
+    z-index: 160;
+    letter-spacing: 0.2rem;
+  }
+`;
+
+const swashIn = keyframes`
+  0% {
+    opacity: 0;
+    transform-origin: 50% 50%;
+    transform: scale(0, 0);
+  }
+
+  90% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(0.9, 0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1, 1);
+  }
+`;
+
+const Cloud = styled.img`
+  animation: ${swashIn} 0.5s ease-out;
+  position: absolute;
+  bottom: 65%;
+  z-index: 140;
+  width: 11.875rem;
+`;
+
+const PokemonImage = styled.img`
+  animation: ${TwisterIn} 1.5s ease-in;
+  position: absolute;
+  padding: 1rem;
+  bottom: 50%;
+  width: 15.625rem;
+  z-index: 150;
 `;
 
 const LogoWrapper = styled.div`
@@ -97,11 +185,12 @@ const PokemonWrapper = styled.section`
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
+  gap: 5rem;
 
   background: rgb(236, 236, 236);
   border: 1px solid hsl(210, 15%, 89%);
   border-radius: 2rem;
-  filter: drop-shadow(0 2px 0.75rem hsla(213, 53%, 20%, 0.308));
+  filter: drop-shadow(0 0.125rem 0.75rem hsla(213, 53%, 20%, 0.308));
   margin: 2rem auto;
   padding: 2rem;
   text-align: center;
@@ -113,19 +202,68 @@ const PokemonArea = styled.article`
   display: flex;
 `;
 
-const Pokeball = styled.div`
-    margin: 20px;
-    width: 100px;
-    height: 100px;
-    background: var(--red);
-    border-radius: 50%;
-    box-shadow: inset 0 -72px 0 -37px #fff, inset 0 -76px 0 -35px #000,
-      0 0 0 5px #000;
-    position: relative;
-    transition: 0.4s;
-    transform-origin: bottom center;
-    z-index: 140;
+const wiggle = keyframes`
+  20% {
+    box-shadow: inset -5px 0 5px 0 rgba(0, 0, 0, 0.4);
+    transform: rotate(7deg);
   }
+
+  40% {
+    box-shadow: inset -11px 0 5px 0 rgba(0, 0, 0, 0.4);
+    transform: rotate(-14deg);
+  }
+
+  60% {
+    box-shadow: inset -5px 0 5px 0 rgba(0, 0, 0, 0.4);
+    transform: rotate(4deg);
+  }
+
+  80% {
+    box-shadow: inset -8px 0 5px 0 rgba(0, 0, 0, 0.4);
+    transform: rotate(-2deg);
+  }
+
+  100% {
+    box-shadow: inset -7px 0 5px 0 rgba(0, 0, 0, 0.4);
+    transform: rotate(0deg);
+  }
+`;
+
+const antiWiggle = keyframes`  
+  20% {
+    transform: translateX(4px) rotate(-7deg);
+  }
+
+  40% {
+    transform: translateX(-8px) rotate(14deg);
+  }
+
+  60% {
+    transform: translateX(2px) rotate(-4deg);
+  }
+
+  80% {
+    transform: translateX(-1px) rotate(2deg);
+  }
+
+  100% {
+    transform: translateX(0px) rotate(0deg);
+  }
+`;
+
+const Pokeball = styled.div`
+  margin: 20px;
+  width: 100px;
+  height: 100px;
+  background: var(--red);
+  border-radius: 50%;
+  box-shadow: inset 0 -72px 0 -37px #fff, inset 0 -76px 0 -35px #000,
+    0 0 0 5px #000;
+  position: relative;
+  transition: 0.4s;
+  transform-origin: bottom center;
+  z-index: 140;
+  //animation:${(props) => (props.inactive ? swashOut : null)}
 
   &:before {
     display: block;
@@ -156,64 +294,49 @@ const Pokeball = styled.div`
 
   &:hover {
     cursor: pointer;
-    animation: anti-wiggle 1s ease-in-out;
+    animation: ${antiWiggle} 1s ease-in-out;
   }
 
   &:hover:after {
-    animation: wiggle 1s ease-in-out;
+    animation: ${wiggle} 1s ease-in-out;
   }
 
   &:focus,
   &:active {
     outline: 0;
   }
+`;
 
-  @keyframes wiggle {
-    20% {
-      box-shadow: inset -5px 0 5px 0 rgba(0, 0, 0, 0.4);
-      transform: rotate(7deg);
-    }
-
-    40% {
-      box-shadow: inset -11px 0 5px 0 rgba(0, 0, 0, 0.4);
-      transform: rotate(-14deg);
-    }
-
-    60% {
-      box-shadow: inset -5px 0 5px 0 rgba(0, 0, 0, 0.4);
-      transform: rotate(4deg);
-    }
-
-    80% {
-      box-shadow: inset -8px 0 5px 0 rgba(0, 0, 0, 0.4);
-      transform: rotate(-2deg);
-    }
-
-    100% {
-      box-shadow: inset -7px 0 5px 0 rgba(0, 0, 0, 0.4);
-      transform: rotate(0deg);
-    }
+const swashOut = keyframes`
+  0% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1, 1);
   }
 
-  @keyframes anti-wiggle {
-    20% {
-      transform: translateX(4px) rotate(-7deg);
-    }
+  80% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(0.9, 0.9);
+  }
 
-    40% {
-      transform: translateX(-8px) rotate(14deg);
-    }
-
-    60% {
-      transform: translateX(2px) rotate(-4deg);
-    }
-
-    80% {
-      transform: translateX(-1px) rotate(2deg);
-    }
-
-    100% {
-      transform: translateX(0px) rotate(0deg);
-    }
+  100% {
+    opacity: 0;
+    transform-origin: 50% 50%;
+    transform: scale(0, 0);
   }
 `;
+
+/* const spaceInUp = keyframes`
+  from{
+    opacity: 0;
+    transform-origin: 50% 0%;
+    transform: scale(0.2) translate(0%, -200%);
+  }
+
+  to {
+    opacity: 1;
+    transform-origin: 50% 0%;
+    transform: scale(2) translate(0%, 0%) rotate(1turn);
+  }
+`; */
