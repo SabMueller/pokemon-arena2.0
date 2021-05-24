@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Route, Switch } from 'react-router-dom';
+import { saveToLocal, loadFromLocal } from './lib/localStorage';
 import Navigation from './Navigation';
 import Arena from './Arena';
 import pokemonLogo from './images/pokemon-logo.svg';
@@ -8,20 +9,27 @@ import pokeball from './images/pokeball.svg';
 import bugIcon from './images/Pokémon_Bug_Type_Icon.svg';
 import fireIcon from './images/Pokémon_Fire_Type_Icon.svg';
 import psychicIcon from './images/Pokémon_Psychic_Type_Icon.svg';
-import { saveToLocal, loadFromLocal } from './lib/localStorage';
+import dragonIcon from './images/Pokémon_Dragon_Type_Icon.svg';
+import electricIcon from './images/Pokémon_Electric_Type_Icon.svg';
+import fightingIcon from './images/Pokémon_Fighting_Type_Icon.svg';
+import ghostIcon from './images/Pokémon_Ghost_Type_Icon.svg';
+import grassIcon from './images/Pokémon_Grass_Type_Icon.svg';
+import groundIcon from './images/Pokémon_Ground_Type_Icon.svg';
+import iceIcon from './images/Pokémon_Ice_Type_Icon.svg';
+import normalIcon from './images/Pokémon_Normal_Type_Icon.svg';
+import poisonIcon from './images/Pokémon_Poison_Type_Icon.svg';
+import rockIcon from './images/Pokémon_Rock_Type_Icon.svg';
+import waterIcon from './images/Pokémon_Water_Type_Icon.svg';
 
 function App() {
   const [pokemon, setPokemon] = useState(loadFromLocal('Pokemon') ?? []);
   const [favorites, setFavorites] = useState(
     loadFromLocal('favoritePokemon') ?? []
   );
-  const [pokemonTypes, setPokemonTypes] = useState(
-    loadFromLocal('PokemonTypes') ?? []
-  );
-  console.log('1 type:', pokemonTypes[0]);
-  console.log('1 pokemon:', pokemon[0]);
-  console.log('all types:', pokemonTypes);
-  console.log('all pokemon:', pokemon);
+  const [storage, setStorage] = useState([]);
+
+  console.log('pokemon', pokemon);
+  console.log('storage', storage);
 
   //___________________localStorage
 
@@ -33,58 +41,57 @@ function App() {
     saveToLocal('Pokemon', pokemon);
   }, [pokemon]);
 
-  useEffect(() => {
-    saveToLocal('PokemonTypes', pokemonTypes);
-  }, [pokemonTypes]);
-
   // erster useEffect: fetch Pokemon Infos bis auf Type
-
   useEffect(() => {
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
-      .then((result) => result.json())
-      .then((data) =>
-        setPokemon(
-          data.results.map((item, index) => {
-            item.id = index + 1;
-            item.isFavorite = false;
-            item.isSelected = false;
-            return item;
-          })
-        )
-      );
+    initialPokemon();
   }, []);
 
-  // zweiter useEffect: fetch Pokemon Types
+  async function fetchPokemon() {
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
+    const data = await response.json();
+    return data.results;
+  }
 
-  useEffect(() => {
-    for (let i = 1; i < 152; i++) {
-      fetch('https://pokeapi.co/api/v2/pokemon/' + i)
-        .then((result) => result.json())
-        .then((data) => {
-          const currywurst = {
-            id: i,
-            type: data.types[0].type.name,
-          };
-          pokemonTypes.push(currywurst);
-          /*           setPokemonTypes([currywurst, ...pokemonTypes]); */
-          // hier geht push und nicht setPokemonTypes whyyyyyyyyyyyyyyyyyy
-        });
+  async function initialPokemon() {
+    const pokemon = await fetchPokemon();
+    const upgradedPokemon = await Promise.all(
+      pokemon.map(async (pokemon, index) => {
+        const type = await getType(pokemon.url);
+        return {
+          name: pokemon.name.toUpperCase(),
+          type: type,
+          isFavorite: false,
+          isSelected: false,
+          id: index + 1,
+        };
+      })
+    );
+    setPokemon(upgradedPokemon);
+  }
+
+  async function getType(pokemonURL) {
+    const response = await fetch(pokemonURL);
+    const data = await response.json();
+    return data.types[0].type.name;
+  }
+
+  function filterTypes(type) {
+    if (storage.length >= 1) {
+      setPokemon(storage);
+      const pokemonFilter = storage.filter((pokemon) => pokemon.type === type);
+      setPokemon(pokemonFilter);
+    } else {
+      const pokemonFilter = pokemon.filter((pokemon) => pokemon.type === type);
+      setStorage(pokemon);
+      setPokemon(pokemonFilter);
     }
-  }, []);
+  }
 
-  // dritter useEffect: Vergleich IDs aller Pokemon mit allen Typen >>> wenn übereinstimmt soll Pokemon den entsprechenden Typ bekommen
-
-  useEffect(() => {
-    const allPokemonWithTheirType = pokemon.map((pokemon) => {
-      const entsprechendeID = pokemonTypes.find(
-        (currywurst) => currywurst.id === pokemon.id
-      );
-      pokemon.type = entsprechendeID ? entsprechendeID.type : 'currywurst';
-      return pokemon;
-    });
-    console.log(allPokemonWithTheirType, 'all of them');
-    setPokemon(allPokemonWithTheirType);
-  }, [pokemonTypes]);
+  function showAll() {
+    if (storage.length < 1) {
+      setStorage(pokemon);
+    } else setPokemon(storage);
+  }
 
   function toggleFavorites(pokemonFavorite) {
     const pokemonWithFavorites = pokemon.map((pokemon) => {
@@ -150,11 +157,98 @@ function App() {
               <img src={pokemonLogo} alt="Pokemon Logo" />
             </ImgWrapper>
             <HeadlineOne>First Generation</HeadlineOne>
-            <IconWrapper>
-              <img src={bugIcon} alt="Bug Type Icon" width="50" />
-              <img src={fireIcon} alt="Fire Type Icon" width="50" />
-              <img src={psychicIcon} alt="Psychic Type Icon" width="50" />
-            </IconWrapper>
+            <FilterWrapper>
+              <ButtonWrapper>
+                <Button onClick={showAll}>Show all Pokemon</Button>
+              </ButtonWrapper>
+              <IconWrapper>
+                <IconImage
+                  src={bugIcon}
+                  alt="Bug Type Icon"
+                  width="50"
+                  onClick={() => filterTypes('bug')}
+                />
+                <IconImage
+                  src={fireIcon}
+                  alt="Fire Type Icon"
+                  width="50"
+                  onClick={() => filterTypes('fire')}
+                />
+                <IconImage
+                  src={psychicIcon}
+                  alt="Psychic Type Icon"
+                  width="50"
+                  onClick={() => filterTypes('psychic')}
+                />
+                <IconImage
+                  src={dragonIcon}
+                  alt="Dragon Type Icon"
+                  width="50"
+                  onClick={() => filterTypes('dragon')}
+                />
+                <IconImage
+                  src={electricIcon}
+                  alt="Electric Type Icon"
+                  width="50"
+                  onClick={() => filterTypes('electric')}
+                />
+                <IconImage
+                  src={fightingIcon}
+                  alt="Fighting Type Icon"
+                  width="50"
+                  onClick={() => filterTypes('fighting')}
+                />
+                <IconImage
+                  src={ghostIcon}
+                  alt="Ghost Type Icon"
+                  width="50"
+                  onClick={() => filterTypes('ghost')}
+                />
+
+                <IconImage
+                  src={grassIcon}
+                  alt="Grass Type Icon"
+                  width="50"
+                  onClick={() => filterTypes('grass')}
+                />
+                <IconImage
+                  src={groundIcon}
+                  alt="Ground Type Icon"
+                  width="50"
+                  onClick={() => filterTypes('ground')}
+                />
+                <IconImage
+                  src={iceIcon}
+                  alt="Ice Type Icon"
+                  width="50"
+                  onClick={() => filterTypes('ice')}
+                />
+                <IconImage
+                  src={normalIcon}
+                  alt="Normal Type Icon"
+                  width="50"
+                  onClick={() => filterTypes('normal')}
+                />
+                <IconImage
+                  src={poisonIcon}
+                  alt="Poison Type Icon"
+                  width="50"
+                  onClick={() => filterTypes('poison')}
+                />
+                <IconImage
+                  src={rockIcon}
+                  alt="Rock Type Icon"
+                  width="50"
+                  onClick={() => filterTypes('rock')}
+                />
+                <IconImage
+                  src={waterIcon}
+                  alt="Water Type Icon"
+                  width="50"
+                  onClick={() => filterTypes('water')}
+                />
+              </IconWrapper>
+            </FilterWrapper>
             <PokemonWrapper>
               {pokemon.map((pokemon, index) => (
                 <PokemonCard key={index}>
@@ -201,9 +295,34 @@ const ImgWrapper = styled.div`
   place-items: center;
 `;
 
+const FilterWrapper = styled.div`
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+`;
+
+const ButtonWrapper = styled.div`
+  justify-self: center;
+`;
+
+const Button = styled.button`
+  background-color: var(--yellow);
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  padding: 1rem;
+  border-radius: 100vw;
+  border: var(--dark-blue);
+`;
+
 const IconWrapper = styled.div`
-  display: flex;
-  justify-content: center;
+  justify-self: center;
+`;
+
+const IconImage = styled.img`
+  cursor: pointer;
 `;
 
 const HeadlineOne = styled.h1`
@@ -227,7 +346,7 @@ const PokemonWrapper = styled.section`
   border: 1px solid hsl(210, 15%, 89%);
   border-radius: 2rem;
   filter: drop-shadow(0 2px 0.75rem hsla(213, 53%, 20%, 0.308));
-  margin: 2rem auto;
+  margin: 0 auto 2rem auto;
   padding: 2rem;
   text-align: center;
   width: 80%;

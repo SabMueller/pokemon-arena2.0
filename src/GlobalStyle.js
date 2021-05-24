@@ -12,7 +12,7 @@ export default createGlobalStyle`
     --blue: #3c5aa6;
     --orange: #ff7861;
     --light-grey: #e5eff9;
-    --color-line: #262864;
+    --dark-blue: #262864;
     --border-light: hsl(210, 15%, 89%);
     --border-dark: hsl(213, 19%, 55%); 
 }
