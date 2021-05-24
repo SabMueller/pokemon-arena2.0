@@ -15,11 +15,13 @@ function App() {
   const [favorites, setFavorites] = useState(
     loadFromLocal('favoritePokemon') ?? []
   );
-  const [pokemonTypes, setPokemonTypes] = useState([]);
-  /*   console.log('1 type:', pokemonTypes[0]);
+  const [pokemonTypes, setPokemonTypes] = useState(
+    loadFromLocal('PokemonTypes') ?? []
+  );
+  console.log('1 type:', pokemonTypes[0]);
   console.log('1 pokemon:', pokemon[0]);
   console.log('all types:', pokemonTypes);
-  console.log('all pokemon:', pokemon); */
+  console.log('all pokemon:', pokemon);
 
   //___________________localStorage
 
@@ -30,6 +32,10 @@ function App() {
   useEffect(() => {
     saveToLocal('Pokemon', pokemon);
   }, [pokemon]);
+
+  useEffect(() => {
+    saveToLocal('PokemonTypes', pokemonTypes);
+  }, [pokemonTypes]);
 
   // erster useEffect: fetch Pokemon Infos bis auf Type
 
@@ -59,8 +65,8 @@ function App() {
             id: i,
             type: data.types[0].type.name,
           };
-
           pokemonTypes.push(currywurst);
+          /*           setPokemonTypes([currywurst, ...pokemonTypes]); */
           // hier geht push und nicht setPokemonTypes whyyyyyyyyyyyyyyyyyy
         });
     }
@@ -78,7 +84,7 @@ function App() {
     });
     console.log(allPokemonWithTheirType, 'all of them');
     setPokemon(allPokemonWithTheirType);
-  }, [pokemonTypes]);
+  }, []);
 
   function toggleFavorites(pokemonFavorite) {
     const pokemonWithFavorites = pokemon.map((pokemon) => {
