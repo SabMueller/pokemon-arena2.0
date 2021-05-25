@@ -8,12 +8,6 @@ import levelUp from './sound/letsgo.mp3';
 import pokimons from './sound/pokimons.mp3';
 
 export default function Arena({ pokemon, storage }) {
-  useEffect(() => {
-    /*     alert(
-      `You found 4 pokeballs...Click on them to reveal which pokemons are in it and add them to your arena team!`
-    ); */
-  }, []);
-
   const [hiddenPokemon, setHiddenPokemon] = useState(
     storage.length >= 1 ? storage.slice() : pokemon.slice()
   );
