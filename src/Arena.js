@@ -1,22 +1,30 @@
 import styled, { keyframes } from 'styled-components/macro';
 import { useEffect, useState } from 'react';
+import useSound from 'use-sound';
+
 import pokemonLogo from './images/pokemon-logo.svg';
 import cloud from './images/cloud.svg';
+import levelUp from './sound/letsgo.mp3';
+import pokimons from './sound/pokimons.mp3';
 
-export default function Arena({ pokemon }) {
+export default function Arena({ pokemon, storage }) {
   useEffect(() => {
-    alert(
+    /*     alert(
       `You found 4 pokeballs...Click on them to reveal which pokemons are in it and add them to your arena team!`
-    );
+    ); */
   }, []);
 
-  const pokemonCopy = pokemon.slice();
+  const [hiddenPokemon, setHiddenPokemon] = useState(
+    storage.length >= 1 ? storage.slice() : pokemon.slice()
+  );
 
-  const [hiddenPokemon, setHiddenPokemon] = useState([]);
+  const [PokemonSound] = useSound(levelUp, { volume: 0.25 });
+  const [newPokemonSound] = useSound(pokimons, { volume: 0.15 });
 
   useEffect(() => {
-    const shuffledPokemon = shuffleArray(pokemonCopy).slice(0, 4);
+    const shuffledPokemon = shuffleArray(hiddenPokemon).slice(0, 4);
     setHiddenPokemon(shuffledPokemon);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function togglePokemonVisibility(pokemonToToggle) {
@@ -48,12 +56,15 @@ export default function Arena({ pokemon }) {
       <LogoWrapper>
         <img src={pokemonLogo} alt="Pokemon Logo" />
       </LogoWrapper>
-      <HeadlineOne>Arena</HeadlineOne>
+      <HeadlineOne onClick={newPokemonSound}>Arena</HeadlineOne>
       <PokemonWrapper>
         {hiddenPokemon.map((pokemon, index) => (
           <PokemonArea key={index}>
             <div className="pokemon">
-              <Pokeball onClick={() => togglePokemonVisibility(pokemon)} />
+              <Pokeball
+                onClick={() => togglePokemonVisibility(pokemon)}
+                onMouseDown={PokemonSound}
+              />
               <ImgWrapper>
                 {pokemon.isSelected ? revealPokemon(pokemon) : null}
               </ImgWrapper>
@@ -179,6 +190,7 @@ const HeadlineOne = styled.h1`
   color: var(--red);
   text-shadow: 1px 1px 1px black;
   letter-spacing: 0.1rem;
+  cursor: pointer;
 `;
 
 const PokemonWrapper = styled.section`

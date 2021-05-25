@@ -44,6 +44,7 @@ function App() {
   // erster useEffect: fetch Pokemon Infos bis auf Type
   useEffect(() => {
     initialPokemon();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function fetchPokemon() {
@@ -150,7 +151,7 @@ function App() {
             </PokemonWrapper>
           </Route>
           <Route path="/arena">
-            <Arena pokemon={pokemon} onSetPokemon={setPokemon} />
+            <Arena pokemon={pokemon} storage={storage} />
           </Route>
           <Route exact path="/">
             <ImgWrapper>
@@ -159,7 +160,7 @@ function App() {
             <HeadlineOne>First Generation</HeadlineOne>
             <FilterWrapper>
               <ButtonWrapper>
-                <Button onClick={showAll}>Show all Pokemon</Button>
+                <Button onClick={showAll}>SHOW ALL POKEMON</Button>
               </ButtonWrapper>
               <IconWrapper>
                 <IconImage
@@ -312,6 +313,7 @@ const Button = styled.button`
   cursor: pointer;
   font-weight: bold;
   font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.2rem;
   padding: 1rem;
   border-radius: 100vw;
   border: var(--dark-blue);
@@ -323,6 +325,7 @@ const IconWrapper = styled.div`
 
 const IconImage = styled.img`
   cursor: pointer;
+  margin: 0 0.2rem;
 `;
 
 const HeadlineOne = styled.h1`
