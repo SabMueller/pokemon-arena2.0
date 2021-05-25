@@ -41,7 +41,7 @@ function App() {
     saveToLocal('Pokemon', pokemon);
   }, [pokemon]);
 
-  // erster useEffect: fetch Pokemon Infos bis auf Type
+  // erster useEffect: fetch Pokemon Infos
   useEffect(() => {
     initialPokemon();
     // eslint-disable-next-line react-hooks/exhaustive-deps
