@@ -38,7 +38,6 @@ function App() {
   }, [pokemonTypes]);
 
   // erster useEffect: fetch Pokemon Infos bis auf Type
-
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
       .then((result) => result.json())
@@ -53,10 +52,10 @@ function App() {
         )
       );
   }, []);
-
   // zweiter useEffect: fetch Pokemon Types
-
   useEffect(() => {
+    // lokales Array
+    const pokemonWithType = [];
     for (let i = 1; i < 152; i++) {
       fetch('https://pokeapi.co/api/v2/pokemon/' + i)
         .then((result) => result.json())
@@ -65,15 +64,17 @@ function App() {
             id: i,
             type: data.types[0].type.name,
           };
-          pokemonTypes.push(currywurst);
+          pokemonWithType.push(currywurst);
+          // State Update wenn letztes Pokemon mit Typ ermittelt wurde
+          if (i === 151) {
+            setPokemonTypes(pokemonWithType);
+          }
           /*           setPokemonTypes([currywurst, ...pokemonTypes]); */
           // hier geht push und nicht setPokemonTypes whyyyyyyyyyyyyyyyyyy
         });
     }
   }, []);
-
   // dritter useEffect: Vergleich IDs aller Pokemon mit allen Typen >>> wenn übereinstimmt soll Pokemon den entsprechenden Typ bekommen
-
   useEffect(() => {
     const allPokemonWithTheirType = pokemon.map((pokemon) => {
       const entsprechendeID = pokemonTypes.find(
