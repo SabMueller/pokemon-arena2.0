@@ -15,28 +15,26 @@ export default function Navigation() {
   return (
     <Header>
       <NavigationStyle>
-        <NavLink activeClassName="active" className="link" exact to="/">
+        <NavLink activeClassName='active' className='link' exact to='/'>
           Home
         </NavLink>
-        <NavLink activeClassName="active" className="link" to="/favorites">
+        <NavLink activeClassName='active' className='link' to='/favorites'>
           Favorites
         </NavLink>
         <NavLink
-          activeClassName="active"
-          className="link"
-          to="/arena"
-          onClick={toggleModal}
-        >
+          activeClassName='active'
+          className='link'
+          to='/arena'
+          onClick={toggleModal}>
           Arena
           <Modal
             isOpen={isOpen}
             onRequestClose={toggleModal}
-            contentLabel="Arena Introduction"
-          >
+            contentLabel='Arena Introduction'>
             <ModalWrapper>
               <ModalContentWrapper>
                 <LogoWrapper>
-                  <img src={pokemonLogo} alt="Pokemon Logo" />
+                  <img src={pokemonLogo} alt='Pokemon Logo' />
                 </LogoWrapper>
                 <HeadlineOne>Arena</HeadlineOne>
                 <p>
@@ -53,7 +51,7 @@ export default function Navigation() {
                   <span>POKEMON you've caught!</span>"
                 </p>
               </ModalContentWrapper>
-              <img src={professorOak} alt="Professor Oak" />
+              <img src={professorOak} alt='Professor Oak' />
             </ModalWrapper>
             <ButtonWrapper>
               <Button onClick={toggleModal}>CHECK OUT YOUR POKEBALLS!</Button>
@@ -97,7 +95,6 @@ const NavigationStyle = styled.nav`
     top: 0;
     left: 0;
     width: 50%;
-    xheight: 100%;
   }
   &:after {
     content: '';
@@ -105,7 +102,6 @@ const NavigationStyle = styled.nav`
     top: 0;
     left: -100%;
     width: 100%;
-    xheight: 100%;
     background: linear-gradient(
       90deg,
       transparent,
