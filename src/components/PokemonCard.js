@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import pokeball from './images/pokeball.svg';
+import pokeball from '../assets/images/pokeball.svg';
 
 export default function PokemonCard({ pokemon, onToggleFavorites }) {
   return (

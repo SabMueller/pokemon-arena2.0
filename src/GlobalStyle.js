@@ -23,6 +23,10 @@ export default createGlobalStyle`
     box-sizing: border-box;
 }
 
+h1 {
+    @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+    font-family: 'Bangers', cursive;
+}
 body, 
 h1, 
 h2, 

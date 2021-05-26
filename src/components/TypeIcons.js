@@ -1,18 +1,18 @@
 import styled from 'styled-components/macro';
-import bugIcon from './images/Pokémon_Bug_Type_Icon.svg';
-import fireIcon from './images/Pokémon_Fire_Type_Icon.svg';
-import psychicIcon from './images/Pokémon_Psychic_Type_Icon.svg';
-import dragonIcon from './images/Pokémon_Dragon_Type_Icon.svg';
-import electricIcon from './images/Pokémon_Electric_Type_Icon.svg';
-import fightingIcon from './images/Pokémon_Fighting_Type_Icon.svg';
-import ghostIcon from './images/Pokémon_Ghost_Type_Icon.svg';
-import grassIcon from './images/Pokémon_Grass_Type_Icon.svg';
-import groundIcon from './images/Pokémon_Ground_Type_Icon.svg';
-import iceIcon from './images/Pokémon_Ice_Type_Icon.svg';
-import normalIcon from './images/Pokémon_Normal_Type_Icon.svg';
-import poisonIcon from './images/Pokémon_Poison_Type_Icon.svg';
-import rockIcon from './images/Pokémon_Rock_Type_Icon.svg';
-import waterIcon from './images/Pokémon_Water_Type_Icon.svg';
+import bugIcon from '../assets/images/Pokémon_Bug_Type_Icon.svg';
+import fireIcon from '../assets/images/Pokémon_Fire_Type_Icon.svg';
+import psychicIcon from '../assets/images/Pokémon_Psychic_Type_Icon.svg';
+import dragonIcon from '../assets/images/Pokémon_Dragon_Type_Icon.svg';
+import electricIcon from '../assets/images/Pokémon_Electric_Type_Icon.svg';
+import fightingIcon from '../assets/images/Pokémon_Fighting_Type_Icon.svg';
+import ghostIcon from '../assets/images/Pokémon_Ghost_Type_Icon.svg';
+import grassIcon from '../assets/images/Pokémon_Grass_Type_Icon.svg';
+import groundIcon from '../assets/images/Pokémon_Ground_Type_Icon.svg';
+import iceIcon from '../assets/images/Pokémon_Ice_Type_Icon.svg';
+import normalIcon from '../assets/images/Pokémon_Normal_Type_Icon.svg';
+import poisonIcon from '../assets/images/Pokémon_Poison_Type_Icon.svg';
+import rockIcon from '../assets/images/Pokémon_Rock_Type_Icon.svg';
+import waterIcon from '../assets/images/Pokémon_Water_Type_Icon.svg';
 
 export default function TypeIcons({ onShowAll, onFilterTypes }) {
   return (

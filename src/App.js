@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { saveToLocal, loadFromLocal } from './lib/localStorage';
-import Navigation from './Navigation';
-import Home from './Home';
-import Favorites from './Favorites';
-import Arena from './Arena';
+import Navigation from './components/Navigation';
+import Home from './pages/Home';
+import Favorites from './pages/Favorites';
+import Arena from './pages/Arena';
 
 function App() {
   const [pokemon, setPokemon] = useState(loadFromLocal('Pokemon') ?? []);

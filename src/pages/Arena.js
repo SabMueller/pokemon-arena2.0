@@ -2,10 +2,10 @@ import styled, { keyframes } from 'styled-components/macro';
 import { useEffect, useState } from 'react';
 import useSound from 'use-sound';
 
-import pokemonLogo from './images/pokemon-logo.svg';
-import cloud from './images/cloud.svg';
-import levelUp from './sound/letsgo.mp3';
-import pokimons from './sound/pokimons.mp3';
+import pokemonLogo from '../assets/images/pokemon-logo.svg';
+import cloud from '../assets/images/cloud.svg';
+import levelUp from '../assets/sound/letsgo.mp3';
+import pokimons from '../assets/sound/pokimons.mp3';
 
 export default function Arena({ pokemon, storage }) {
   const [hiddenPokemon, setHiddenPokemon] = useState(
@@ -38,9 +38,8 @@ export default function Arena({ pokemon, storage }) {
         <Cloud src={cloud} />
         <PokemonImage
           src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
-          alt="Pokemon Profile"
-          className="pokemon-profile-pic"
-        ></PokemonImage>
+          alt='Pokemon Profile'
+          className='pokemon-profile-pic'></PokemonImage>
       </>
     );
   }
@@ -48,13 +47,13 @@ export default function Arena({ pokemon, storage }) {
   return (
     <>
       <LogoWrapper>
-        <img src={pokemonLogo} alt="Pokemon Logo" />
+        <img src={pokemonLogo} alt='Pokemon Logo' />
       </LogoWrapper>
       <HeadlineOne onClick={newPokemonSound}>Arena</HeadlineOne>
       <PokemonWrapper>
         {hiddenPokemon.map((pokemon, index) => (
           <PokemonArea key={index}>
-            <div className="pokemon">
+            <div className='pokemon'>
               <Pokeball
                 onClick={() => togglePokemonVisibility(pokemon)}
                 onMouseDown={PokemonSound}

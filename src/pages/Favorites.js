@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
-import pokemonLogo from './images/pokemon-logo.svg';
-import pokeball from './images/pokeball.svg';
+import pokemonLogo from '../assets/images/pokemon-logo.svg';
+import pokeball from '../assets/images/pokeball.svg';
 
 export default function Favorites({ favorites, onToggleFavorites }) {
   return (

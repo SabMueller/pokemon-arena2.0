@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
-import TypeIcons from './TypeIcons';
-import PokemonCards from './PokemonCards';
-import pokemonLogo from './images/pokemon-logo.svg';
+import TypeIcons from '../components/TypeIcons';
+import PokemonCards from '../components/PokemonCards';
+import pokemonLogo from '../assets/images/pokemon-logo.svg';
 
 export default function Home({
   pokemon,

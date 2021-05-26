@@ -40,6 +40,8 @@ const Header = styled.header`
 `;
 
 const NavigationStyle = styled.nav`
+  @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+  font-family: 'Bangers', cursive;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;

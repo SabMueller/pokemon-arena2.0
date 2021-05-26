@@ -1,7 +1,7 @@
 import Modal from 'react-modal';
 import styled from 'styled-components/macro';
-import professorOak from './images/professor-oak.png';
-import pokemonLogo from './images/pokemon-logo.svg';
+import professorOak from '../assets/images/professor-oak.png';
+import pokemonLogo from '../assets/images/pokemon-logo.svg';
 
 export default function ArenaModal({ isOpen, onToggleModal }) {
   return (
